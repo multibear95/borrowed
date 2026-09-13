@@ -1,5 +1,7 @@
 # MORE — Technical Architecture
 
+> Implementation update (2026-09-13): `/mcp` now exposes the four existing registry tools using the official Python SDK's low-level server. This milestone is an **authless demo** as requested; the API-key scopes, write rate limits, extra tools and FastMCP approach described below remain the original target design. See [MCP setup](backend/docs/mcp-demo-zh.md) and [local verification](backend/docs/mcp-acceptance-zh.md).
+
 **Version 0.1 · 12 September 2026 · companion to SPEC.md**
 
 Stack per `dress-rental-prd.md` with one change: Next.js + Tailwind,

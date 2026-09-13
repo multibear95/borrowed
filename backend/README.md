@@ -1,5 +1,7 @@
 # borrowed backend — Stages 1–2
 
+MCP demo is now available at `/mcp`: four shared tools over authless Streamable HTTP. See [Cursor / ChatGPT / Claude setup](docs/mcp-demo-zh.md). MCP tool calls do not need OpenAI credentials.
+
 Structured search → submit booking → immediate hold → survive restart. Python 3.12, FastAPI, Pydantic v2, single-process in-memory dict with JSON snapshots.
 
 Stage 2 adds the OpenAI borrower conversation API. See [Stage 2 setup and API flow](docs/stage2-usage.md) and [中文说明](docs/stage2-usage-zh.md). Configure `OPENAI_API_KEY` and `OPENAI_MODEL` for live conversations.

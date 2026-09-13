@@ -8,7 +8,12 @@ from borrowed_backend.domain.ranking import score
 from .registry import tool
 
 
-@tool(name="search_garments", description="Find garments available for the requested place, size and dates.",
+@tool(name="search_garments", description=(
+    "Use to find available garments for a city, EU size and explicit wear date. "
+    "For dresses, ask for sizes_eu before calling. Returns feasible matches only, "
+    "with price, score and logistics dates. return_date is the last wear day (inclusive); "
+    "omit to use the garment rental period. Empty results mean no match, not an error."
+),
       input=SearchRequest, output=list[SearchHit])
 async def search_garments(store: InMemoryStore, req: SearchRequest) -> list[SearchHit]:
     hits = []
@@ -30,12 +35,19 @@ async def search_garments(store: InMemoryStore, req: SearchRequest) -> list[Sear
     return hits[:req.limit]
 
 
-@tool(name="get_garment", description="Get garment details.", input=GetGarmentIn, output=GarmentPublic)
+@tool(name="get_garment", description=(
+    "Use to get details for a garment_id returned by search. This does not confirm "
+    "availability; use check_availability for specific dates. Image paths are server-relative."
+), input=GetGarmentIn, output=GarmentPublic)
 async def get_garment(store: InMemoryStore, req: GetGarmentIn) -> GarmentPublic:
     return store.get(req.garment_id).public()
 
 
-@tool(name="check_availability", description="Check whether a garment can be borrowed for these dates.",
+@tool(name="check_availability", description=(
+    "Use to check a garment for a city, EU sizes and wear dates. Returns feasible, "
+    "logistics dates and a reason when unavailable. return_date is the last wear day "
+    "(inclusive). This check does not place a hold."
+),
       input=CheckAvailabilityIn, output=Feasibility)
 async def check_availability(store: InMemoryStore, req: CheckAvailabilityIn) -> Feasibility:
     return check(store.get(req.garment_id), req, store.today())
@@ -45,6 +57,9 @@ async def check_availability(store: InMemoryStore, req: CheckAvailabilityIn) -> 
     "Places a **real hold** on the garment for these dates. The garment immediately "
     "becomes unavailable to every other borrower. **No payment is taken and no card is "
     "charged** — this reserves the item only."
+    " Use only after the user explicitly confirms the garment and dates. "
+    "return_date is the last wear day, inclusive. Supply a unique idempotency_key "
+    "and reuse that key and the same arguments for retries."
 ), input=CreateBookingIn, output=BookingResult, scope="booking:write")
 async def create_booking(store: InMemoryStore, req: CreateBookingIn) -> BookingResult:
     return await store.create_booking(req)

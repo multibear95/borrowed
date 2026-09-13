@@ -81,6 +81,7 @@ def test_full_flow_restart_and_idempotency(settings):
         assert not app.state.store.reservations
         results = event(turn(client, cid, text="汉堡，EU 38"), "results")
         assert len(results["hits"]) <= 3
+        assert app.state.store.conversations[cid].slots.result_request.limit == 3
         assert all(hit["feasibility"]["feasible"] for hit in results["hits"])
         assert results["hits"][0]["feasibility"]["wear_from"] == "2026-09-18"
         assert not app.state.store.reservations
@@ -159,7 +160,7 @@ def test_no_results_and_model_failure_are_recoverable(settings):
         assert event(turn(client, cid, text="hello"), "error")["recoverable"]
         events = turn(client, cid, text="Hamburg EU 38 Friday, free only")
         assert event(events, "results")["hits"] == []
-        assert "修改" in event(events, "token")["text"]
+        assert "Try another date" in event(events, "token")["text"]
         assert not app.state.store.reservations
 
 

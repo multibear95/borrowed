@@ -339,7 +339,8 @@ footer{
   <ul>
     <li><strong>Implemented:</strong> borrower stages 1–3 — deterministic search and availability, explicit reservation confirmation, JSON snapshots, text conversation, and the Next.js borrower page.</li>
     <li><strong>Current model integration:</strong> OpenAI Responses API. References to Claude below describe the original design.</li>
-    <li><strong>Deferred:</strong> lender listing flows, image upload and recognition, bundles, MCP, LLM reranking, and constraint relaxation.</li>
+    <li><strong>MCP demo (2026-09-13):</strong> four shared tools at <code>/mcp</code>, authless Streamable HTTP via the official Python SDK. <a href="../backend/docs/mcp-demo-zh.md">Setup</a> and <a href="../backend/docs/mcp-acceptance-zh.md">local verification</a>. Authentication and additional tools below remain target design.</li>
+    <li><strong>Deferred:</strong> lender listing flows, image upload and recognition, bundles, LLM reranking, and constraint relaxation.</li>
     <li><strong>Verified locally:</strong> real backend HTTP/SSE in two browser tabs, one successful reservation and one conflict, and unavailability after refresh and backend restart. Model responses were scripted; live OpenAI and Railway deployment were not verified in this acceptance run.</li>
     <li><strong>Runtime:</strong> one backend instance and one worker. Refresh starts a new conversation; reservations remain in backend snapshots.</li>
   </ul>

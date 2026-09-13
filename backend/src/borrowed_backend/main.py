@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.routing import Route
 
 from borrowed_backend.api.routes import router
 from borrowed_backend.api.conversations import router as conversations_router
@@ -11,6 +12,7 @@ from borrowed_backend.config import Settings
 from borrowed_backend.data.store import InMemoryStore
 from borrowed_backend.domain.errors import Conflict, IdempotencyConflict, NotFound, PersistenceFailure
 from borrowed_backend.tools import definitions as _definitions
+from borrowed_backend.tools.adapters.mcp_server import MCPAdapter
 
 
 def create_app(settings: Settings | None = None, *, borrower_llm: BorrowerLLM | None = None) -> FastAPI:
@@ -21,11 +23,15 @@ def create_app(settings: Settings | None = None, *, borrower_llm: BorrowerLLM | 
         app.state.store = InMemoryStore(settings)
         app.state.borrower_llm = borrower_llm or OpenAILLM(settings)
         try:
-            yield
+            async with mcp.manager.run():
+                yield
         finally:
             await app.state.borrower_llm.close()
 
     app = FastAPI(title="borrowed — stage 2", lifespan=lifespan)
+    mcp = MCPAdapter(settings, lambda: app.state.store)
+    # ASGI routes preserve MCP request bodies and avoid a /mcp -> /mcp/ redirect.
+    app.router.routes.append(Route("/mcp", endpoint=mcp, methods=["GET", "POST", "DELETE"]))
     app.include_router(router)
     app.include_router(conversations_router)
     app.mount("/images", StaticFiles(directory=settings.images_dir), name="images")

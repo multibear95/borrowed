@@ -107,7 +107,9 @@ class BorrowerGraph:
                     or turn.garment_id not in state.result_ids
                     or state.result_request is None
                     or state.slots.missing()
-                    or state.slots.search_request() != state.result_request):
+                    or state.slots.search_request().model_copy(update={
+                        "limit": state.result_request.limit,
+                    }) != state.result_request):
                 await emit(Error(code="CONFIRMATION_REQUIRED", message=(
                     "Search first, then explicitly confirm one of the recommended garments. "
                     "A reservation holds the garment immediately and takes no payment.")))

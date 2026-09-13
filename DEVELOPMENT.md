@@ -170,6 +170,8 @@ model.
 
 Implemented:
 
+- authless MCP at `/mcp`, sharing the four existing tools and store; see [MCP demo setup](backend/docs/mcp-demo-zh.md)
+
 - structured garment search with availability and lead-time rules
 - text conversation over server-sent events
 - borrower web interface (`/find`)
@@ -181,7 +183,7 @@ Not implemented (out of hackathon scope):
 
 - accounts, payments, identity verification, insurance, courier integration
 - booking cancellation
-- lender listing creation, image understanding, styling assistance, MCP, model
+- lender listing creation, image understanding, styling assistance, model
   re-ranking and relaxed-condition search
 
 Lender-facing routes and catalogue-building tools remain in the repository but

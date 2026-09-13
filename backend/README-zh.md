@@ -1,5 +1,7 @@
 # borrowed backend — 阶段 1–2
 
+已新增无认证 MCP demo：`/mcp` 暴露现有四个工具，复用相同库存和预约存储。见 [Cursor / ChatGPT / Claude 接入说明](docs/mcp-demo-zh.md)。MCP 工具调用无需配置 OpenAI 凭据。
+
 文字对话 → 补充日期、城市和尺码 → 搜索推荐 → 明确确认预约 → 立即占用 → 重启恢复。Python 3.12，FastAPI、Pydantic v2、LangGraph 和 OpenAI Responses API，单进程内存字典与 JSON 快照。
 
 阶段 1 的结构化搜索和预约接口仍然可用；完整对话示例见 [阶段 2 使用说明](docs/stage2-usage-zh.md)。

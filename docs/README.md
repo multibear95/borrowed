@@ -1,8 +1,10 @@
 # Borrowed 文档入口
 
-更新日期：2026-09-12。当前实现 borrower 阶段 1–3：搜索、文字对话、明确确认预约与最小页面。使用 OpenAI Responses API；后端为单实例、单 worker、内存字典与 JSON 快照。
+更新日期：2026-09-13。当前实现 borrower 阶段 1–3，以及无认证 MCP demo：搜索、文字对话、明确确认预约与最小页面。网页对话使用 OpenAI Responses API，MCP 直接调用业务工具；后端为单实例、单 worker、内存字典与 JSON 快照。
 
 ## 本地演示
+
+- [MCP demo 接入](../backend/docs/mcp-demo-zh.md)：无认证四工具、Cursor 本地配置、ChatGPT/Claude HTTPS 接入与测试对话。
 
 - [阶段 3 使用说明](../backend/docs/stage3-usage-zh.md)：真实模型启动、无凭据固定演示、双窗口冲突与重启检查。
 - [后端 README](../backend/README-zh.md)：后端环境和结构化 API。
@@ -33,4 +35,4 @@
 - [完整目标架构](architecture.html)：保留原设计，页首列出当前实现范围。
 - [后端规格](../specs/BACKEND_SPEC.md)：完整目标规格；本轮阶段范围见实施计划。
 
-lender、图片上传与识别、搭配、MCP、模型二次排序和复杂条件放宽尚未实现。
+lender、图片上传与识别、搭配、模型二次排序和复杂条件放宽尚未实现。MCP 已实现无认证 demo；部署及真实客户端状态见 [MCP 验收记录](../backend/docs/mcp-acceptance-zh.md)。

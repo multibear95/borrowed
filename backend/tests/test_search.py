@@ -44,9 +44,9 @@ def test_score_cap_and_tiebreak(store, garment):
     changed = garment.model_copy(update={"colour_family": "black", "style_tags": ["a", "b", "c", "d"]})
     assert score(changed, req) == 11
     assert score(changed.model_copy(update={"colour_family": None}), req) == 8
-    store.garments = {"b": garment.model_copy(update={"id": "b"}),
-                      "a": garment.model_copy(update={"id": "a"}),
-                      "c": garment.model_copy(update={"id": "c", "rental_price": 40})}
+    store.garments = {"b": changed.model_copy(update={"id": "b"}),
+                      "a": changed.model_copy(update={"id": "a"}),
+                      "c": changed.model_copy(update={"id": "c", "rental_price": 40})}
     assert [h.garment.id for h in asyncio.run(search_garments(store, req))] == ["c", "a", "b"]
 
 

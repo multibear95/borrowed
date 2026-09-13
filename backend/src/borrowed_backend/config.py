@@ -18,3 +18,9 @@ class Settings(BaseSettings):
     openai_model: str | None = None
     llm_timeout_s: float = Field(default=25, gt=0, le=120)
     debug: bool = False
+    mcp_allowed_hosts: list[str] = Field(default_factory=lambda: [
+        "127.0.0.1", "127.0.0.1:*", "localhost", "localhost:*", "[::1]", "[::1]:*",
+    ])
+    mcp_allowed_origins: list[str] = Field(default_factory=lambda: [
+        "http://127.0.0.1:*", "http://localhost:*",
+    ])
