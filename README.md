@@ -172,7 +172,7 @@ Server-Sent Events · Railway · a lot of coffee ☕
 
 | Product | Development |
 | :--- | :--- |
-| Gizem · Sonali · Neelamma | Vicky · Jing |
+| [Gizem](https://www.linkedin.com/in/gizemisik/) · [Sonali](https://www.linkedin.com/in/sonali-jadhav444/) · [Neelamma](https://www.linkedin.com/in/neelamma-doddannavar/) | [Victoria](https://www.linkedin.com/in/victoria-streltsova/) · [Jing](https://www.linkedin.com/in/janewush/) |
 
 </div>
 
